@@ -1,0 +1,36 @@
+.gradient-bg {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+.card-shadow {
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+}
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+.loading {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+.chart-bar {
+    transition: all 0.5s ease;
+}
