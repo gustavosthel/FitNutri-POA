@@ -284,7 +284,7 @@ Se você encontrar algum problema ou tiver sugestões, por favor:
 
 1. Verifique as [Issues existentes](https://github.com/seu-usuario/FitNutri-POA/issues)
 2. Crie uma nova issue se necessário
-3. Entre em contato: [seu-email@exemplo.com](mailto:seu-email@exemplo.com)
+3. Entre em contato: [charlesgabriel102@gmail.com](mailto:charlesgabriel102@gmail.com)
 
 ---
 
