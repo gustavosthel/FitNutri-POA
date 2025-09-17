@@ -67,64 +67,64 @@ Antes de começar, certifique-se de ter:
 - **Conta na Groq** para obter a chave da API
 - **Navegador web moderno**
 
-## 🔧 Instalação
+## 🚀 Setup Rápido (5 minutos)
 
-### 1. Clone o repositório:
+### **Opção 1: Script Automático (Recomendado)**
+```powershell
+# Execute o script de configuração
+.\setup.ps1
+```
+
+### **Opção 2: Configuração Manual**
 ```bash
+# 1. Clone o repositório
 git clone https://github.com/gabrielteixeira021/FitNutri-POA.git
 cd FitNutri-POA
+
+# 2. Copie o arquivo de configuração
+copy src\main\resources\config.properties.example src\main\resources\config.properties
+
+# 3. Configure sua chave da API Groq
+# Edite o arquivo config.properties e substitua "SUA_CHAVE_GROQ_AQUI"
+
+# 4. Importe no Eclipse
+# File → Import → Existing Projects into Workspace
+
+# 5. Execute no Tomcat
+# Right-click → Run As → Run on Server
 ```
 
-### 2. Importe no Eclipse:
-1. Abra o Eclipse IDE
-2. File → Import → Existing Projects into Workspace
-3. Selecione a pasta do projeto
-4. Clique em "Finish"
+## ✅ Configurações Já Incluídas
 
-### 3. Configure o Tomcat:
-1. Window → Preferences → Server → Runtime Environments
-2. Add → Apache Tomcat v11.0
-3. Aponte para o diretório de instalação do Tomcat
+- ✅ **Facets do Eclipse**: Java 11 + Web 5.0 (pré-configuradas)
+- ✅ **Build Path**: JavaSE-11 + dependências (pré-configurado)
+- ✅ **Projeto Eclipse**: `.project`, `.classpath`, `.settings` (incluídos)
+- ✅ **Dependências**: Apache HttpClient, JSON, Jakarta Servlet
+- ✅ **Segurança**: `.gitignore` protege chaves da API
 
-### 4. Compile o projeto:
-```bash
-# Via linha de comando
-javac -cp "src/main/webapp/WEB-INF/lib/*" -d "bin" src/main/java/com/fitnutri/**/*.java
-```
+## 🔧 Configuração da Chave API (Único passo necessário)
 
-## ⚙️ Configuração
+### **Opção A - Arquivo de configuração (Recomendado):**
+1. Copie o template:
+   ```bash
+   copy src\main\resources\config.properties.example src\main\resources\config.properties
+   ```
+2. Edite `src/main/resources/config.properties`
+3. Substitua `SUA_CHAVE_GROQ_AQUI` pela sua chave real da API Groq
 
-### 1. Chave da API Groq:
+### **Opção B - Variável de ambiente (Mais seguro):**
+```powershell
+# Windows (PowerShell)
+$env:GROQ_API_KEY = "sua_chave_aqui"
 
-**Opção A - Arquivo de configuração (recomendado):**
-1. Crie o arquivo `src/main/resources/config.properties`
-2. Adicione sua chave:
-```properties
-groq.api.key=sua_chave_api_aqui
-```
-
-**Opção B - Variável de ambiente:**
-```bash
-# Windows
-set GROQ_API_KEY=sua_chave_api_aqui
+# Windows (CMD)
+set GROQ_API_KEY=sua_chave_aqui
 
 # Linux/Mac
-export GROQ_API_KEY=sua_chave_api_aqui
+export GROQ_API_KEY="sua_chave_aqui"
 ```
 
-### 2. Configuração do Servidor:
-1. Right-click no projeto → Properties
-2. Project Facets → Marque "Dynamic Web Module"
-3. Deployment Assembly → Adicione as bibliotecas necessárias
-
-### 3. Dependências:
-Certifique-se de que as seguintes bibliotecas estão em `src/main/webapp/WEB-INF/lib/`:
-- `jakarta.servlet-api-6.0.0.jar`
-- `httpclient-4.5.13.jar`
-- `httpcore-4.4.13.jar`
-- `jackson-databind-2.13.3.jar`
-- `json-20250517.jar`
-- `slf4j-api-1.7.32.jar`
+> **💡 Dica:** As configurações do Eclipse, dependências e facets já estão incluídas no repositório!
 
 ## 🎮 Como Usar
 

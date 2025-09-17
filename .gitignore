@@ -5,9 +5,6 @@
 # ========== ARQUIVOS SENSÍVEIS ==========
 # Chaves de API e configurações sensíveis
 src/main/resources/config.properties
-src/config.properties
-*.properties
-config.properties
 *.key
 *.secret
 
@@ -42,9 +39,9 @@ out/
 logs/
 *.log.*
 
-# Eclipse IDE
+# Eclipse IDE - manter configurações de projeto
 .metadata/
-.settings/
+# .settings/ - INCLUIR para facilitar setup
 .loadpath
 .recommenders
 .target
