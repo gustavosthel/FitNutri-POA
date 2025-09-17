@@ -1,0 +1,48 @@
+# ===========================================
+# FitNutri-POA - Configuração de Exemplo
+# ===========================================
+
+# INSTRUÇÕES:
+# 1. Copie este arquivo para config.properties
+# 2. Substitua os valores de exemplo pelas suas chaves reais
+# 3. Nunca commite o arquivo config.properties real!
+
+# ========== GROQ API ==========
+# Sua chave da API Groq (obtenha em: https://console.groq.com)
+# Exemplo: gsk_abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx
+groq.api.key=SUA_CHAVE_GROQ_AQUI
+
+# ========== CONFIGURAÇÕES OPCIONAIS ==========
+# Timeout para requisições (em milissegundos)
+api.timeout=30000
+
+# URL base da API (normalmente não precisa alterar)
+groq.api.base.url=https://api.groq.com/openai/v1/chat/completions
+
+# Modelo padrão (se não especificado na requisição)
+groq.default.model=llama-3.1-8b-instant
+
+# ========== CONFIGURAÇÕES DE APLICAÇÃO ==========
+# Nome da aplicação
+app.name=FitNutri-POA
+app.version=1.0.0
+
+# Configurações de log
+log.level=INFO
+log.file.path=logs/fitnutri.log
+
+# ========== CONFIGURAÇÕES DE DESENVOLVIMENTO ==========
+# Ativar modo debug (true/false)
+debug.mode=false
+
+# Cache de respostas (true/false)
+cache.enabled=true
+cache.ttl.minutes=10
+
+# ========== OUTRAS APIs (FUTURAS) ==========
+# Exemplo para outras integrações futuras
+# nutrition.api.key=SUA_CHAVE_NUTRITION_API
+# fitness.api.key=SUA_CHAVE_FITNESS_API
+# database.url=jdbc:postgresql://localhost:5432/fitnutri
+# database.username=usuario
+# database.password=senha

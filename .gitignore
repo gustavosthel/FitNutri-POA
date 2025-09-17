@@ -1,0 +1,249 @@
+# ===========================================
+# FitNutri-POA - .gitignore
+# ===========================================
+
+# ========== ARQUIVOS SENSÍVEIS ==========
+# Chaves de API e configurações sensíveis
+src/main/resources/config.properties
+src/config.properties
+*.properties
+config.properties
+*.key
+*.secret
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.development
+.env.production
+
+# Certificados e chaves
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+*.keystore
+
+# ========== JAVA & IDE ==========
+# Arquivos compilados
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+bin/
+build/
+target/
+out/
+
+# Arquivos de log
+*.log
+logs/
+*.log.*
+
+# Eclipse IDE
+.metadata/
+.settings/
+.loadpath
+.recommenders
+.target
+.classpath.bak
+.project.bak
+RemoteSystemsTempFiles/
+Servers/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# ========== SISTEMA OPERACIONAL ==========
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ========== SERVIDORES & DEPLOYMENT ==========
+# Tomcat
+.metadata/.plugins/org.eclipse.wst.server.core/tmp*/
+Servers/
+work/
+temp/
+webapps/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# ========== DOCUMENTAÇÃO TEMPORÁRIA ==========
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.#*
+
+# Backups
+*.bak
+*.backup
+*.old
+*.orig
+
+# ========== DADOS & CACHE ==========
+# Cache de aplicações
+.cache/
+cache/
+*.cache
+
+# Arquivos de sessão
+*.session
+
+# Dados temporários de desenvolvimento
+data/
+db/
+uploads/
+downloads/
+
+# ========== FERRAMENTAS DE DESENVOLVIMENTO ==========
+# Node.js (caso seja usado no frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Package files
+*.tgz
+*.tar.gz
+
+# ========== CONFIGURAÇÕES ESPECÍFICAS ==========
+# Configurações de banco de dados local
+database.properties
+db.properties
+hibernate.cfg.xml.local
+
+# Configurações de desenvolvimento local
+local.properties
+dev.properties
+test.properties
+
+# Arquivos de perfil personalizado
+profile.properties
+user.properties
+
+# ========== ARQUIVOS DE EXEMPLO ==========
+# Manter arquivos de exemplo mas ignorar configurações reais
+!config.properties.example
+!database.properties.example
+!.env.example
+
+# ========== DEPENDÊNCIAS EXTERNAS ==========
+# Bibliotecas baixadas manualmente
+lib/external/
+lib/downloaded/
+
+# JAR files temporários
+*.jar.tmp
+
+# ========== SAÍDA DE TESTES ==========
+# Relatórios de teste
+test-results/
+test-output/
+surefire-reports/
+failsafe-reports/
+
+# Cobertura de código
+coverage/
+*.gcov
+*.lcov
+jacoco.exec
+
+# ========== ARQUIVOS ESPECÍFICOS DO PROJETO ==========
+# Arquivos de configuração com dados reais
+groq-api.key
+openai.key
+api-keys.txt
+
+# Dados de usuário de desenvolvimento
+users.json
+sessions.json
+dev-data.json
+
+# ========== DOCUMENTAÇÃO GERADA ==========
+# Javadoc gerado
+doc/
+docs/generated/
+javadoc/
+
+# ========== COMENTÁRIOS E INSTRUÇÕES ==========
+# Adicione aqui outros arquivos específicos que devem ser ignorados
+# Exemplos:
+# meu-arquivo-secreto.txt
+# configuracao-pessoal.properties
+
+# ========== ARQUIVOS DE MONITORAMENTO ==========
+# Métricas e monitoramento
+metrics/
+monitoring/
+health-check/
+
+# ========== FINAL ==========
+# Sempre mantenha esta linha em branco no final
