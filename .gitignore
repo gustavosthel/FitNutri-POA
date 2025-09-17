@@ -4,9 +4,10 @@
 
 # ========== ARQUIVOS SENSÍVEIS ==========
 # Chaves de API e configurações sensíveis
-src/main/resources/config.properties
+config.properties
 *.key
 *.secret
+*.env
 
 # Variáveis de ambiente
 .env
@@ -23,9 +24,8 @@ src/main/resources/config.properties
 *.keystore
 
 # ========== JAVA & IDE ==========
-# Arquivos compilados
+# Arquivos compilados (mas NÃO os JARs de dependências)
 *.class
-*.jar
 *.war
 *.ear
 *.nar
@@ -39,9 +39,8 @@ out/
 logs/
 *.log.*
 
-# Eclipse IDE - manter configurações de projeto
+# Eclipse IDE - manter configurações úteis, ignorar temporários
 .metadata/
-# .settings/ - INCLUIR para facilitar setup
 .loadpath
 .recommenders
 .target
@@ -55,7 +54,6 @@ Servers/
 *.iws
 *.iml
 *.ipr
-out/
 
 # NetBeans
 nbproject/private/
@@ -102,15 +100,12 @@ Icon?
 .nfs*
 
 # ========== SERVIDORES & DEPLOYMENT ==========
-# Tomcat
-.metadata/.plugins/org.eclipse.wst.server.core/tmp*/
-Servers/
+# Tomcat - arquivos temporários do servidor
 work/
 temp/
 webapps/
 
 # Maven
-target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -123,7 +118,6 @@ buildNumber.properties
 
 # Gradle
 .gradle/
-build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
@@ -146,7 +140,6 @@ gradle-app.setting
 # ========== DADOS & CACHE ==========
 # Cache de aplicações
 .cache/
-cache/
 *.cache
 
 # Arquivos de sessão
@@ -192,11 +185,6 @@ user.properties
 !database.properties.example
 !.env.example
 
-# ========== DEPENDÊNCIAS EXTERNAS ==========
-# Bibliotecas baixadas manualmente
-lib/external/
-lib/downloaded/
-
 # JAR files temporários
 *.jar.tmp
 
@@ -230,17 +218,19 @@ doc/
 docs/generated/
 javadoc/
 
-# ========== COMENTÁRIOS E INSTRUÇÕES ==========
-# Adicione aqui outros arquivos específicos que devem ser ignorados
-# Exemplos:
-# meu-arquivo-secreto.txt
-# configuracao-pessoal.properties
-
 # ========== ARQUIVOS DE MONITORAMENTO ==========
 # Métricas e monitoramento
 metrics/
 monitoring/
 health-check/
+
+# ========== INSTRUÇÕES ESPECÍFICAS ==========
+#  OS JARs EM lib/ SERÃO VERSIONADOS
+
+
+# Arquivos que devem SEMPRE ser ignorados
+/WebContent/WEB-INF/classes/
+/WebContent/WEB-INF/web.xml.bak
 
 # ========== FINAL ==========
 # Sempre mantenha esta linha em branco no final
