@@ -44,5 +44,11 @@ public class ConfigurationManager {
 		return getProperty("groq.api.key");
 	}
 	
-	
+	public static void testApiKey() {
+	    String key = getApiKey();
+	    System.out.println("API Key: " + (key != null ? 
+	        key.substring(0, Math.min(8, key.length())) + "..." : "NULA"));
+	    System.out.println("Tamanho: " + (key != null ? key.length() : 0));
+	    System.out.println("Formato: " + (key != null && key.startsWith("gsk_") ? "CORRETO" : "ERRADO"));
+	}
 }
