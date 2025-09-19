@@ -272,7 +272,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 **Gabriel Teixeira** - [gabrielteixeira021](https://github.com/gabrielteixeira021)
 
-**Gustavo Shell** - [gustavosthel](https://github.com/gustavosthel)
+**Gustavo Sthel** - [gustavosthel](https://github.com/gustavosthel)
 
 **Nathaly Pereira** - [metataly](https://github.com/metataly)
 
