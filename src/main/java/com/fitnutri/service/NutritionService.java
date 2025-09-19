@@ -1,7 +1,6 @@
 package com.fitnutri.service;
 
 import com.fitnutri.entity.NutritionEntity;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -14,7 +13,7 @@ import com.google.gson.JsonParser;
 public class NutritionService {
 
     public NutritionEntity analyzeFood(String food, double quantity, String unit) {
-    	NutritionEntity result = null;
+        NutritionEntity result = null;
         
         // Primeiro, tenta a API Edamam
         result = fetchFromEdamam(food, quantity, unit);
@@ -43,6 +42,8 @@ public class NutritionService {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5000); // Timeout de 5 segundos
+            conn.setReadTimeout(5000);
             
             if (conn.getResponseCode() != 200) {
                 return null;
@@ -59,7 +60,7 @@ public class NutritionService {
             
             JsonObject jsonObject = JsonParser.parseString(content.toString()).getAsJsonObject();
             JsonArray hints = jsonObject.getAsJsonArray("hints");
-            if (hints.size() > 0) {
+            if (hints != null && hints.size() > 0) {
                 JsonObject foodItem = hints.get(0).getAsJsonObject().getAsJsonObject("food");
                 JsonObject nutrients = foodItem.getAsJsonObject("nutrients");
                 
@@ -81,13 +82,13 @@ public class NutritionService {
                 );
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Erro ao acessar API Edamam: " + e.getMessage());
         }
         return null;
     }
 
     private double getNutrientValue(JsonObject nutrients, String key) {
-        if (nutrients.has(key) && !nutrients.get(key).isJsonNull()) {
+        if (nutrients != null && nutrients.has(key) && !nutrients.get(key).isJsonNull()) {
             return nutrients.get(key).getAsDouble();
         }
         return 0;
@@ -103,6 +104,8 @@ public class NutritionService {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5000); // Timeout de 5 segundos
+            conn.setReadTimeout(5000);
             
             if (conn.getResponseCode() != 200) {
                 return null;
@@ -119,26 +122,28 @@ public class NutritionService {
             
             JsonObject jsonObject = JsonParser.parseString(content.toString()).getAsJsonObject();
             JsonArray foods = jsonObject.getAsJsonArray("foods");
-            if (foods.size() > 0) {
+            if (foods != null && foods.size() > 0) {
                 JsonObject foodItem = foods.get(0).getAsJsonObject();
                 JsonArray nutrientsArray = foodItem.getAsJsonArray("foodNutrients");
                 
                 double calories = 0, protein = 0, carbs = 0, fat = 0, fiber = 0, sugar = 0, sodium = 0, potassium = 0;
                 
-                for (int i = 0; i < nutrientsArray.size(); i++) {
-                    JsonObject nutrient = nutrientsArray.get(i).getAsJsonObject();
-                    int nutrientId = nutrient.get("nutrientId").getAsInt();
-                    double value = nutrient.get("value").getAsDouble();
-                    
-                    switch (nutrientId) {
-                        case 1008: calories = value; break;
-                        case 1003: protein = value; break;
-                        case 1005: carbs = value; break;
-                        case 1004: fat = value; break;
-                        case 1079: fiber = value; break;
-                        case 2000: sugar = value; break;
-                        case 1093: sodium = value; break;
-                        case 1092: potassium = value; break;
+                if (nutrientsArray != null) {
+                    for (int i = 0; i < nutrientsArray.size(); i++) {
+                        JsonObject nutrient = nutrientsArray.get(i).getAsJsonObject();
+                        int nutrientId = nutrient.get("nutrientId").getAsInt();
+                        double value = nutrient.get("value").getAsDouble();
+                        
+                        switch (nutrientId) {
+                            case 1008: calories = value; break;
+                            case 1003: protein = value; break;
+                            case 1005: carbs = value; break;
+                            case 1004: fat = value; break;
+                            case 1079: fiber = value; break;
+                            case 2000: sugar = value; break;
+                            case 1093: sodium = value; break;
+                            case 1092: potassium = value; break;
+                        }
                     }
                 }
                 
@@ -160,23 +165,55 @@ public class NutritionService {
                 );
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Erro ao acessar API USDA: " + e.getMessage());
         }
         return null;
     }
 
     private NutritionEntity getEstimatedData(String food, double quantity, String unit) {
         Random random = new Random();
+        // Ajuste os valores baseados no tipo de alimento
+        double baseCalories = 0;
+        double baseProtein = 0;
+        double baseCarbs = 0;
+        double baseFat = 0;
+        
+        String lowerFood = food.toLowerCase();
+        
+        if (lowerFood.contains("frango") || lowerFood.contains("carne") || lowerFood.contains("peixe")) {
+            baseCalories = 165;
+            baseProtein = 31;
+            baseCarbs = 0;
+            baseFat = 3.6;
+        } else if (lowerFood.contains("arroz") || lowerFood.contains("macarrão") || lowerFood.contains("batata")) {
+            baseCalories = 130;
+            baseProtein = 2.7;
+            baseCarbs = 28;
+            baseFat = 0.3;
+        } else if (lowerFood.contains("banana") || lowerFood.contains("maçã") || lowerFood.contains("laranja")) {
+            baseCalories = 89;
+            baseProtein = 1.1;
+            baseCarbs = 23;
+            baseFat = 0.3;
+        } else {
+            baseCalories = 100;
+            baseProtein = 5;
+            baseCarbs = 15;
+            baseFat = 2;
+        }
+        
+        double multiplier = quantity / 100;
+        
         return new NutritionEntity(
             food,
-            Math.floor(random.nextDouble() * 200) + 50,
-            Math.floor(random.nextDouble() * 20) + 2,
-            Math.floor(random.nextDouble() * 30) + 5,
-            Math.floor(random.nextDouble() * 10) + 1,
-            Math.floor(random.nextDouble() * 5) + 1,
-            Math.floor(random.nextDouble() * 15) + 1,
-            Math.floor(random.nextDouble() * 100) + 10,
-            Math.floor(random.nextDouble() * 300) + 100,
+            Math.round(baseCalories * multiplier),
+            Math.round(baseProtein * multiplier * 10) / 10.0,
+            Math.round(baseCarbs * multiplier * 10) / 10.0,
+            Math.round(baseFat * multiplier * 10) / 10.0,
+            Math.round((random.nextDouble() * 5 + 1) * multiplier * 10) / 10.0,
+            Math.round((random.nextDouble() * 10 + 1) * multiplier * 10) / 10.0,
+            Math.round((random.nextDouble() * 100 + 10) * multiplier),
+            Math.round((random.nextDouble() * 300 + 100) * multiplier),
             quantity,
             unit,
             "Estimativa (APIs indisponíveis)"

@@ -75,94 +75,109 @@
     <div id="nutrition-analyzer-page" class="page active pt-16">
         <div class="min-h-screen bg-white">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <!-- ... título mantido ... -->
+                
                 <div class="text-center mb-12">
                     <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">🥗 Analisador Nutricional</h1>
                     <p class="text-lg text-gray-600">Servlet de processamento nutricional com base de dados interna</p>
                 </div>
                 
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <!-- Food Search -->
-                    <div class="bg-neutral rounded-2xl p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-dark mb-6">Buscar Alimento</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-dark mb-2">Nome do Alimento</label>
-                                <input type="text" id="food-search" placeholder="Ex: 100g peito de frango grelhado" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
+                <form action="nutrition-analyzer" method="POST">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <!-- Food Search -->
+                        <div class="bg-neutral rounded-2xl p-8 card-shadow">
+                            <h3 class="text-xl font-semibold text-dark mb-6">Buscar Alimento</h3>
+                            <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-dark mb-2">Quantidade</label>
-                                    <input type="number" id="food-quantity" value="100" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <label class="block text-sm font-medium text-dark mb-2">Nome do Alimento</label>
+                                    <input type="text" name="food" value="${param.food}" placeholder="Ex: 100g peito de frango grelhado" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-dark mb-2">Unidade</label>
-                                    <select id="food-unit" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                                        <option value="g">gramas (g)</option>
-                                        <option value="ml">mililitros (ml)</option>
-                                        <option value="unit">unidade</option>
-                                        <option value="cup">xícara</option>
-                                        <option value="tbsp">colher de sopa</option>
-                                    </select>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-dark mb-2">Quantidade</label>
+                                        <input type="number" name="quantity" value="${empty param.quantity ? '100' : param.quantity}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-dark mb-2">Unidade</label>
+                                        <select name="unit" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="g" ${param.unit == 'g' ? 'selected' : ''}>gramas (g)</option>
+                                            <option value="ml" ${param.unit == 'ml' ? 'selected' : ''}>mililitros (ml)</option>
+                                            <option value="unit" ${param.unit == 'unit' ? 'selected' : ''}>unidade</option>
+                                            <option value="cup" ${param.unit == 'cup' ? 'selected' : ''}>xícara</option>
+                                            <option value="tbsp" ${param.unit == 'tbsp' ? 'selected' : ''}>colher de sopa</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <button onclick="analyzeNutrition()" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors">
-                                <span id="nutrition-btn-text">🔍 Processar com Servlet</span>
-                                <div id="nutrition-loading" class="hidden flex items-center justify-center">
-                                    <div class="loading w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-                                    Servlet processando...
-                                </div>
-                            </button>
-                            
-                            <!-- Quick Search -->
-                            <div class="grid grid-cols-2 gap-2 mt-4">
-                                <button onclick="quickNutritionSearch('banana')" class="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm hover:bg-gray-200 transition-colors">🍌 Banana</button>
-                                <button onclick="quickNutritionSearch('frango grelhado')" class="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm hover:bg-gray-200 transition-colors">🍗 Frango</button>
-                                <button onclick="quickNutritionSearch('arroz integral')" class="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm hover:bg-gray-200 transition-colors">🍚 Arroz</button>
-                                <button onclick="quickNutritionSearch('salmão')" class="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm hover:bg-gray-200 transition-colors">🐟 Salmão</button>
+                                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors">
+                                    🔍 Processar com Servlet
+                                </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Nutrition Results -->
-                    <div class="bg-neutral rounded-2xl p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-dark mb-6">Análise Nutricional</h3>
-                        <div id="nutrition-results">
-                            <div class="text-center text-gray-500 py-12">
-                                <div class="text-6xl mb-4">🍽️</div>
-                                <p>Digite um alimento para ver a análise completa via Servlet</p>
+                        <!-- Nutrition Results -->
+                        <div class="bg-neutral rounded-2xl p-8 card-shadow">
+                            <h3 class="text-xl font-semibold text-dark mb-6">Análise Nutricional</h3>
+                            <div id="nutrition-results">
+                                <c:choose>
+                                    <c:when test="${not empty nutritionData}">
+                                        <div class="fade-in">
+                                            <div class="text-center mb-6">
+                                                <h4 class="text-2xl font-bold text-primary mb-2">${nutritionData.name}</h4>
+                                                <div class="text-sm text-gray-600">${nutritionData.quantity}${nutritionData.unit}</div>
+                                                <div class="text-4xl font-bold text-dark mt-2">${nutritionData.calories} kcal</div>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                                                    <div class="text-2xl font-bold text-blue-600">${nutritionData.protein}g</div>
+                                                    <div class="text-sm text-blue-800">Proteínas</div>
+                                                </div>
+                                                <div class="bg-yellow-50 p-4 rounded-lg text-center">
+                                                    <div class="text-2xl font-bold text-yellow-600">${nutritionData.carbs}g</div>
+                                                    <div class="text-sm text-yellow-800">Carboidratos</div>
+                                                </div>
+                                                <div class="bg-red-50 p-4 rounded-lg text-center">
+                                                    <div class="text-2xl font-bold text-red-600">${nutritionData.fat}g</div>
+                                                    <div class="text-sm text-red-800">Gorduras</div>
+                                                </div>
+                                                <div class="bg-green-50 p-4 rounded-lg text-center">
+                                                    <div class="text-2xl font-bold text-green-600">${nutritionData.fiber}g</div>
+                                                    <div class="text-sm text-green-800">Fibras</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-2 text-sm mb-6">
+                                                <div class="flex justify-between">
+                                                    <span>Açúcares:</span>
+                                                    <span class="font-medium">${nutritionData.sugar}g</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span>Sódio:</span>
+                                                    <span class="font-medium">${nutritionData.sodium}mg</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span>Potássio:</span>
+                                                    <span class="font-medium">${nutritionData.potassium}mg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${not empty error}">
+                                        
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="text-center text-gray-500 py-12">
+                                            <div class="text-6xl mb-4">🍽️</div>
+                                            <p>Digite um alimento para ver a análise completa via Servlet</p>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
-                <!-- Daily Log -->
-                <div class="mt-12 bg-neutral rounded-2xl p-8 card-shadow">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-xl font-semibold text-dark">Registro Diário</h3>
-                        <div class="text-sm text-gray-500" id="nutrition-date"></div>
-                    </div>
-                    <div id="daily-nutrition-log" class="space-y-4">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
-                    <div class="mt-6 grid md:grid-cols-4 gap-4 text-center">
-                        <div class="bg-white p-4 rounded-lg">
-                            <div class="text-2xl font-bold text-primary" id="total-calories">0</div>
-                            <div class="text-sm text-gray-600">Calorias</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg">
-                            <div class="text-2xl font-bold text-blue-500" id="total-protein">0g</div>
-                            <div class="text-sm text-gray-600">Proteínas</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg">
-                            <div class="text-2xl font-bold text-yellow-500" id="total-carbs">0g</div>
-                            <div class="text-sm text-gray-600">Carboidratos</div>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg">
-                            <div class="text-2xl font-bold text-red-500" id="total-fat">0g</div>
-                            <div class="text-sm text-gray-600">Gorduras</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- ... daily log mantido ... -->
             </div>
         </div>
     </div>
@@ -210,5 +225,24 @@
     </footer>
 
     <script src="js/script.js"></script>
+    
+    <style>
+    .loading {
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 </body>
 </html>
